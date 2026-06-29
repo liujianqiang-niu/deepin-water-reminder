@@ -1,0 +1,13 @@
+[Desktop Entry]
+Name=喝水提醒
+Name[en]=Deepin Water
+Comment=趣味桌面喝水提醒助手
+Comment[en]=A fun desktop drinking water reminder
+Exec=deepin-water-reminder
+Icon=deepin-water-reminder
+Type=Application
+Categories=Utility;
+X-Deepin-Vendor=deepin
+StartupNotify=false
+Terminal=false
+NoDisplay=false

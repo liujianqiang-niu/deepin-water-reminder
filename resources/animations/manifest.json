@@ -1,0 +1,55 @@
+{
+  "version": "2.0",
+  "animations": [
+    {
+      "id": "ocean",
+      "displayName": "碧海潮生",
+      "type": "qml-custom",
+      "resourcePath": "qrc:/animations/ocean/OceanWave.qml",
+      "nativeSize": { "width": 1920, "height": 1080 },
+      "defaultDurationMs": 8000,
+      "loop": true,
+      "maxLoops": 1
+    },
+    {
+      "id": "galaxy",
+      "displayName": "星河璀璨",
+      "type": "qml-custom",
+      "resourcePath": "qrc:/animations/galaxy/GalaxySpiral.qml",
+      "nativeSize": { "width": 1920, "height": 1080 },
+      "defaultDurationMs": 8000,
+      "loop": true,
+      "maxLoops": 1
+    },
+    {
+      "id": "aurora",
+      "displayName": "极光幻境",
+      "type": "qml-custom",
+      "resourcePath": "qrc:/animations/aurora/AuroraFlow.qml",
+      "nativeSize": { "width": 1920, "height": 1080 },
+      "defaultDurationMs": 8000,
+      "loop": true,
+      "maxLoops": 1
+    },
+    {
+      "id": "storm",
+      "displayName": "雷暴来袭",
+      "type": "qml-custom",
+      "resourcePath": "qrc:/animations/storm/ThunderStorm.qml",
+      "nativeSize": { "width": 1920, "height": 1080 },
+      "defaultDurationMs": 8000,
+      "loop": true,
+      "maxLoops": 1
+    },
+    {
+      "id": "inferno",
+      "displayName": "烈焰涅槃",
+      "type": "qml-custom",
+      "resourcePath": "qrc:/animations/inferno/FireInferno.qml",
+      "nativeSize": { "width": 1920, "height": 1080 },
+      "defaultDurationMs": 8000,
+      "loop": true,
+      "maxLoops": 1
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+deepin-water-reminder (1.0.0) unstable; urgency=medium
+
+  * Initial release.
+  * Fun and non-intrusive desktop water drinking reminder.
+  * Features skeleton dance, lion jump, and more animations.
+  * Full system tray integration with customizable intervals.
+
+ -- Deepin Developer <developer@deepin.org>  Wed, 18 Jun 2026 12:00:00 +0800

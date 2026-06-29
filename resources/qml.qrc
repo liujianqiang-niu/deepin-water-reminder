@@ -1,0 +1,30 @@
+<RCC>
+    <qresource prefix="/">
+        <!-- QML 文件 -->
+        <file>qml/main.qml</file>
+        <file>qml/TransparentOverlay.qml</file>
+        <file>qml/SettingsPanel.qml</file>
+        <file>qml/DrinkRecordPanel.qml</file>
+        <file>qml/AboutPanel.qml</file>
+
+        <!-- 全屏动画 -->
+        <file>animations/ocean/OceanWave.qml</file>
+        <file>animations/test/RedTest.qml</file>
+        <file>animations/galaxy/GalaxySpiral.qml</file>
+        <file>animations/aurora/AuroraFlow.qml</file>
+        <file>animations/storm/ThunderStorm.qml</file>
+        <file>animations/inferno/FireInferno.qml</file>
+
+        <!-- 动画清单 -->
+        <file>animations/manifest.json</file>
+
+        <!-- 图标 -->
+        <file>icons/deepin-water-reminder.svg</file>
+        <file>icons/tray-default.svg</file>
+        <file>icons/tray-reminding.svg</file>
+        <file>icons/tray-paused.svg</file>
+
+        <!-- 翻译 -->
+        <file>translations/deepin-water_en_US.qm</file>
+    </qresource>
+</RCC>
