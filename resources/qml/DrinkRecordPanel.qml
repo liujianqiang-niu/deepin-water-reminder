@@ -38,6 +38,28 @@ Window {
                 }
             }
 
+            Rectangle {
+                id: progressCard
+                width: parent.width; height: 44; radius: 8
+                color: "#f5f5f5"; border.color: "#bdbdbd"; border.width: 1
+                property int todayCount: bridge ? bridge.todayDrinkCount : 0
+                property int goal: (bridge && bridge.settings && bridge.settings.dailyGoal) ? bridge.settings.dailyGoal : 8
+                property real ratio: goal > 0 ? Math.min(1.0, todayCount / goal) : 0
+
+                Rectangle {
+                    anchors.left: parent.left; anchors.top: parent.top; anchors.bottom: parent.bottom
+                    width: parent.width * parent.ratio
+                    color: parent.ratio >= 1.0 ? "#4caf50" : "#29b6f6"
+                    radius: 8
+                    Behavior on width { NumberAnimation { duration: 300; easing.type: Easing.OutQuad } }
+                }
+                Text {
+                    anchors.centerIn: parent
+                    text: qsTr("今日 %1/%2 杯").arg(progressCard.todayCount).arg(progressCard.goal)
+                    color: "#333333"; font.pixelSize: 14; font.bold: true
+                }
+            }
+
             Button { text:qsTr("记录一次喝水"); width:parent.width; highlighted:true
                 onClicked: { if(bridge) bridge.recordDrink() }
             }

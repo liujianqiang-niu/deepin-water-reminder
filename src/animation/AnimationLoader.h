@@ -12,6 +12,7 @@ public:
     QVector<AnimationDescriptor> loadAll();
     AnimationDescriptor          loadById(const QString &id);
     QStringList                  listThemeIds() const;
+    QStringList                  listThemeDisplayNames() const;
     bool                         isValid(const QString &id) const;
 
 signals:

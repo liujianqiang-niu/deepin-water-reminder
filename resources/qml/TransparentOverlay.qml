@@ -71,6 +71,9 @@ Window {
         overlayWindow.raise()
         overlayWindow.requestActivate()
         autoHideTimer.restart()
+        // 强制重新触发文字入场动画（每次显示都重新播放）
+        quoteLayer.restart()
+        messageLayer.restart()
     }
 
     function hideOverlay() {
@@ -92,6 +95,40 @@ Window {
                 console.error("[Overlay] Loader error:", source)
             }
         }
+    }
+
+    // 文字层优先级：自定义提醒文案 > 趣味语录 > 不显示
+    property bool hasCustomMessage: bridge && bridge.settings ? (String(bridge.settings.reminderMessage || "").length > 0) : false
+    property bool showQuotes: bridge && bridge.settings ? (bridge.settings.showQuotes === true) : false
+
+    // 趣味话语文字层（透明背景 + 逐字飞入动画；点击穿透）
+    AnimatedText {
+        id: quoteLayer
+        visible: !overlayWindow.hasCustomMessage && overlayWindow.showQuotes
+        enabled: false
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: Math.max(100, parent.height * 0.18)
+        text: bridge && bridge.currentQuote ? bridge.currentQuote : ""
+        fontSize: 42
+        animationStyle: bridge && bridge.settings ? (bridge.settings.textAnimationStyle || 0) : 0
+        textColor: "white"
+        outlineColor: "#222222"
+    }
+
+    // 自定义提醒文案层（透明背景 + 逐字飞入动画；优先级最高）
+    AnimatedText {
+        id: messageLayer
+        visible: overlayWindow.hasCustomMessage
+        enabled: false
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: Math.max(100, parent.height * 0.18)
+        text: bridge && bridge.settings ? (bridge.settings.reminderMessage || "") : ""
+        fontSize: 42
+        animationStyle: bridge && bridge.settings ? (bridge.settings.textAnimationStyle || 0) : 0
+        textColor: "white"
+        outlineColor: "#222222"
     }
 
     Component.onCompleted: {

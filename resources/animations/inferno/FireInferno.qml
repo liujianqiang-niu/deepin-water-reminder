@@ -128,14 +128,4 @@ Rectangle {
             NumberAnimation { from: 0.28; to: 0.15; duration: 600; easing.type: Easing.InOutSine }
         }
     }
-
-    Text {
-        anchors.horizontalCenter: parent.horizontalCenter; y: sh * 0.18
-        text: "烈焰燃尽，别忘了补水"; font.pixelSize: Math.max(32, sh * 0.09); font.bold: true
-        color: "#ffdd00"; style: Text.Outline; styleColor: "#661100"
-        SequentialAnimation on scale { loops: Animation.Infinite
-            NumberAnimation { from: 1.0; to: 1.06; duration: 800; easing.type: Easing.InOutSine }
-            NumberAnimation { from: 1.06; to: 1.0; duration: 800; easing.type: Easing.InOutSine }
-        }
-    }
 }

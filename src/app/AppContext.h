@@ -9,6 +9,8 @@ class SettingsManager;
 class TrayManager;
 class DrinkTracker;
 class AnimationLoader;
+class QuoteManager;
+class SoundManager;
 
 class AppContext : public QObject {
     Q_OBJECT
@@ -21,6 +23,8 @@ public:
     TrayManager*      trayManager()      const;
     DrinkTracker*     drinkTracker()     const;
     AnimationLoader*  animationLoader()  const;
+    QuoteManager*     quoteManager()     const;
+    SoundManager*     soundManager()     const;
 
 private:
     std::unique_ptr<ReminderEngine>   m_reminderEngine;
@@ -29,4 +33,6 @@ private:
     std::unique_ptr<TrayManager>      m_trayManager;
     std::unique_ptr<DrinkTracker>     m_drinkTracker;
     std::unique_ptr<AnimationLoader>  m_animationLoader;
+    std::unique_ptr<QuoteManager>     m_quoteManager;
+    std::unique_ptr<SoundManager>     m_soundManager;
 };

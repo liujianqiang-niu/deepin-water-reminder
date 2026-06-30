@@ -6,6 +6,7 @@
         <file>qml/SettingsPanel.qml</file>
         <file>qml/DrinkRecordPanel.qml</file>
         <file>qml/AboutPanel.qml</file>
+        <file>qml/AnimatedText.qml</file>
 
         <!-- 全屏动画 -->
         <file>animations/ocean/OceanWave.qml</file>
@@ -14,6 +15,8 @@
         <file>animations/aurora/AuroraFlow.qml</file>
         <file>animations/storm/ThunderStorm.qml</file>
         <file>animations/inferno/FireInferno.qml</file>
+        <file>animations/bamboo/BambooRain.qml</file>
+        <file>animations/cherry/CherryBlossom.qml</file>
 
         <!-- 动画清单 -->
         <file>animations/manifest.json</file>

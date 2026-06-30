@@ -1,10 +1,12 @@
 // DrinkTracker.cpp
 #include "DrinkTracker.h"
+#include "../settings/SettingsManager.h"
 #include <QSettings>
 #include <QDebug>
 
-DrinkTracker::DrinkTracker(QObject *parent)
+DrinkTracker::DrinkTracker(SettingsManager *settings, QObject *parent)
     : QObject(parent)
+    , m_settings(settings)
 {
     loadFromSettings();
 }
@@ -17,6 +19,23 @@ int DrinkTracker::todayCount() const
 int DrinkTracker::weekCount() const
 {
     return m_weekCount;
+}
+
+int DrinkTracker::dailyGoal() const
+{
+    if (m_settings) {
+        return m_settings->dailyGoal();
+    }
+    return 8;
+}
+
+int DrinkTracker::todayProgress() const
+{
+    int goal = dailyGoal();
+    if (goal <= 0) {
+        return 0;
+    }
+    return m_todayCount * 100 / goal;
 }
 
 void DrinkTracker::recordDrink()
@@ -32,6 +51,7 @@ void DrinkTracker::recordDrink()
     qDebug() << "[DrinkTracker] Recorded drink on" << today << "count:" << m_todayCount;
     emit todayCountChanged(m_todayCount);
     emit weekCountChanged(m_weekCount);
+    emit todayProgressChanged(todayProgress());
     emit drinkRecorded(today, m_todayCount);
 }
 
@@ -43,6 +63,7 @@ void DrinkTracker::clearHistory()
     saveToSettings();
     emit todayCountChanged(0);
     emit weekCountChanged(0);
+    emit todayProgressChanged(0);
 }
 
 void DrinkTracker::loadFromSettings()

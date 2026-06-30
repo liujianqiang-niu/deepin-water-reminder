@@ -21,6 +21,7 @@ find_package(Qt6 6.5 REQUIRED COMPONENTS
     Widgets
     Svg
     Network
+    Multimedia
 )
 
 # Source subdirectory

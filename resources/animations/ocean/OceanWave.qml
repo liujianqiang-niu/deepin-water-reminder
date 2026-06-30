@@ -165,18 +165,4 @@ Rectangle {
             NumberAnimation { from: 0.20; to: 0.10; duration: 3000; easing.type: Easing.InOutSine }
         }
     }
-
-    Text {
-        anchors.horizontalCenter: parent.horizontalCenter; y: sh * 0.45
-        text: "该喝水啦！"; font.pixelSize: Math.max(36, sh * 0.1); font.bold: true
-        color: "#ffffff"; style: Text.Outline; styleColor: "#003366"
-        SequentialAnimation on y { loops: Animation.Infinite
-            NumberAnimation { from: sh * 0.45; to: sh * 0.45 - 10; duration: 3000; easing.type: Easing.InOutSine }
-            NumberAnimation { from: sh * 0.45 - 10; to: sh * 0.45; duration: 3000; easing.type: Easing.InOutSine }
-        }
-        SequentialAnimation on scale { loops: Animation.Infinite
-            NumberAnimation { from: 1.0; to: 1.05; duration: 3000; easing.type: Easing.InOutSine }
-            NumberAnimation { from: 1.05; to: 1.0; duration: 3000; easing.type: Easing.InOutSine }
-        }
-    }
 }

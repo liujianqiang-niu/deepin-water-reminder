@@ -50,6 +50,26 @@
       "defaultDurationMs": 8000,
       "loop": true,
       "maxLoops": 1
+    },
+    {
+      "id": "bamboo",
+      "displayName": "竹林听雨",
+      "type": "qml-custom",
+      "resourcePath": "qrc:/animations/bamboo/BambooRain.qml",
+      "nativeSize": { "width": 1920, "height": 1080 },
+      "defaultDurationMs": 8000,
+      "loop": true,
+      "maxLoops": 1
+    },
+    {
+      "id": "cherry",
+      "displayName": "落樱缤纷",
+      "type": "qml-custom",
+      "resourcePath": "qrc:/animations/cherry/CherryBlossom.qml",
+      "nativeSize": { "width": 1920, "height": 1080 },
+      "defaultDurationMs": 8000,
+      "loop": true,
+      "maxLoops": 1
     }
   ]
 }

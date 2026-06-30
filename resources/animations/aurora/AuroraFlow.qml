@@ -89,14 +89,4 @@ Rectangle {
             NumberAnimation { from: 0.25; to: 0.15; duration: 8000; easing.type: Easing.InOutSine }
         }
     }
-
-    Text {
-        anchors.horizontalCenter: parent.horizontalCenter; y: sh * 0.65
-        text: "极光之下，一杯水的时间"; font.pixelSize: Math.max(28, sh * 0.07); font.bold: true
-        color: "#ccffcc"; style: Text.Outline; styleColor: "#0a2a0a"
-        SequentialAnimation on opacity { loops: Animation.Infinite
-            NumberAnimation { from: 0.5; to: 1.0; duration: 2500 }
-            NumberAnimation { from: 1.0; to: 0.5; duration: 2500 }
-        }
-    }
 }

@@ -3,6 +3,8 @@
 #include "AppContext.h"
 #include "../core/ReminderEngine.h"
 #include "../core/DrinkTracker.h"
+#include "../core/QuoteManager.h"
+#include "../core/SoundManager.h"
 #include "../animation/AnimationManager.h"
 #include "../animation/AnimationLoader.h"
 #include "../settings/SettingsManager.h"
@@ -15,6 +17,8 @@
 #include <QDebug>
 #include <QPalette>
 #include <QStyleHints>
+#include <QTimer>
+#include <QTime>
 
 Application::Application(int &argc, char **argv)
     : QApplication(argc, argv)
@@ -150,6 +154,34 @@ void Application::connectSignals()
     connect(m_context->reminderEngine(), &ReminderEngine::pausedStateChanged, this, [this](bool paused) {
         m_context->trayManager()->setPaused(paused);
     });
+
+    connect(m_context->reminderEngine(), &ReminderEngine::reminderTriggered, this, [this]() {
+        if (m_context->settingsManager()->soundEnabled()) {
+            m_context->soundManager()->playDrinkReminder();
+        }
+    });
+
+    // 桌面通知回退：提醒触发后启动 500ms 计时，若 overlay 未成功请求则回退到托盘通知。
+    // overlayRequested 以 QueuedConnection 连接，确保在 reminderTriggered 同步发射后
+    // 才执行 stop()——因为 QmlBridge 在 reminderTriggered 槽内同步发射 overlayRequested。
+    QTimer *fallbackTimer = new QTimer(this);
+    fallbackTimer->setSingleShot(true);
+    fallbackTimer->setInterval(500);
+    connect(fallbackTimer, &QTimer::timeout, this, [this]() {
+        QString time = QTime::currentTime().toString(QStringLiteral("HH:mm"));
+        m_context->trayManager()->showMessage(
+            QStringLiteral("该喝水了！"),
+            QStringLiteral("现在时间 %1，记得喝水").arg(time));
+        qDebug() << "[Application] Notification fallback fired at" << time;
+    });
+    connect(m_context->reminderEngine(), &ReminderEngine::reminderTriggered, this, [fallbackTimer]() {
+        fallbackTimer->start();
+    });
+    connect(m_bridge, &QmlBridge::overlayRequested, this, [fallbackTimer](const QString &path) {
+        if (!path.isEmpty()) {
+            fallbackTimer->stop();
+        }
+    }, Qt::QueuedConnection);
 
     qDebug() << "[Application] Signals connected";
 }

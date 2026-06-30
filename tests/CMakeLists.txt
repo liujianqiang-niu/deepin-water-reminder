@@ -25,6 +25,8 @@ qt_add_executable(test_DrinkTracker
     test_DrinkTracker.cpp
     ${CMAKE_SOURCE_DIR}/src/core/DrinkTracker.h
     ${CMAKE_SOURCE_DIR}/src/core/DrinkTracker.cpp
+    ${CMAKE_SOURCE_DIR}/src/settings/SettingsManager.h
+    ${CMAKE_SOURCE_DIR}/src/settings/SettingsManager.cpp
 )
 target_include_directories(test_DrinkTracker PRIVATE ${CMAKE_SOURCE_DIR}/src)
 target_link_libraries(test_DrinkTracker PRIVATE Qt6::Core Qt6::Test)

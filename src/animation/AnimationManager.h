@@ -21,6 +21,7 @@ public:
     bool isPlaying() const;
     QString currentTheme() const;
     QStringList availableThemes() const;
+    QStringList availableThemeNames() const;
 
 public slots:
     void play();                                    // 播放当前主题动画

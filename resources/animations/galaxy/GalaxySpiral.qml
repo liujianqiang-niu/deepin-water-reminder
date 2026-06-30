@@ -115,13 +115,4 @@ Rectangle { id:root; color:"transparent"; anchors.fill:parent
             }
         }
     }
-
-    Text { anchors.horizontalCenter:parent.horizontalCenter; y:sh*0.78
-        text:"星辰大海，别忘了喝水"; font.pixelSize:Math.max(32,sh*0.08); font.bold:true
-        color:"#ffffff"; style:Text.Outline; styleColor:"#1a1a44"
-        SequentialAnimation on opacity { loops:Animation.Infinite
-            NumberAnimation{from:0.4;to:1.0;duration:2000}
-            NumberAnimation{from:1.0;to:0.4;duration:2000}
-        }
-    }
 }

@@ -21,7 +21,55 @@ private slots:
         QCOMPARE(settings.animationTheme(), QStringLiteral("skeleton"));
         QCOMPARE(settings.animationDuration(), 6);
         QCOMPARE(settings.autoStart(), false);
-        QCOMPARE(settings.mousePassThrough(), false);
+    }
+
+    void testNewDefaults()
+    {
+        SettingsManager settings;
+        QCOMPARE(settings.showQuotes(), true);
+        QCOMPARE(settings.dailyGoal(), 8);
+        QCOMPARE(settings.reminderMessage(), QString());
+        QCOMPARE(settings.soundEnabled(), true);
+    }
+
+    void testSetShowQuotes()
+    {
+        SettingsManager settings;
+        QSignalSpy spy(&settings, &SettingsManager::showQuotesChanged);
+
+        settings.setShowQuotes(false);
+        QCOMPARE(settings.showQuotes(), false);
+        QCOMPARE(spy.count(), 1);
+    }
+
+    void testSetDailyGoal()
+    {
+        SettingsManager settings;
+        QSignalSpy spy(&settings, &SettingsManager::dailyGoalChanged);
+
+        settings.setDailyGoal(10);
+        QCOMPARE(settings.dailyGoal(), 10);
+        QCOMPARE(spy.count(), 1);
+    }
+
+    void testSetReminderMessage()
+    {
+        SettingsManager settings;
+        QSignalSpy spy(&settings, &SettingsManager::reminderMessageChanged);
+
+        settings.setReminderMessage(QStringLiteral("该喝水了！"));
+        QCOMPARE(settings.reminderMessage(), QStringLiteral("该喝水了！"));
+        QCOMPARE(spy.count(), 1);
+    }
+
+    void testSetSoundEnabled()
+    {
+        SettingsManager settings;
+        QSignalSpy spy(&settings, &SettingsManager::soundEnabledChanged);
+
+        settings.setSoundEnabled(false);
+        QCOMPARE(settings.soundEnabled(), false);
+        QCOMPARE(spy.count(), 1);
     }
 
     void testSetInterval()

@@ -3,6 +3,7 @@
 #include "../app/AppContext.h"
 #include "../core/ReminderEngine.h"
 #include "../core/DrinkTracker.h"
+#include "../core/QuoteManager.h"
 #include "../animation/AnimationManager.h"
 #include "../animation/AnimationLoader.h"
 #include "../settings/SettingsManager.h"
@@ -15,6 +16,9 @@ QmlBridge::QmlBridge(AppContext *context, QObject *parent)
 {
     connect(m_context->reminderEngine(), &ReminderEngine::reminderTriggered, this, [this]() {
         qDebug() << "[QmlBridge] Reminder triggered, requesting overlay";
+        // 动画弹出前刷新趣味话语
+        m_currentQuote = m_context->quoteManager()->randomQuote();
+        emit currentQuoteChanged();
         QString path = m_context->animationManager()->previewTheme(
             m_context->animationManager()->currentTheme());
         emit overlayRequested(path);
@@ -41,6 +45,17 @@ QmlBridge::QmlBridge(AppContext *context, QObject *parent)
     connect(m_context->settingsManager(), &SettingsManager::themeChanged, this, &QmlBridge::settingsChanged);
     connect(m_context->settingsManager(), &SettingsManager::durationChanged, this, &QmlBridge::settingsChanged);
     connect(m_context->settingsManager(), &SettingsManager::autoStartChanged, this, &QmlBridge::settingsChanged);
+    connect(m_context->settingsManager(), &SettingsManager::showQuotesChanged, this, [this](bool enabled) {
+        emit showQuotesChanged(enabled);
+        emit settingsChanged();
+    });
+    connect(m_context->settingsManager(), &SettingsManager::dailyGoalChanged, this, &QmlBridge::settingsChanged);
+    connect(m_context->settingsManager(), &SettingsManager::reminderMessageChanged, this, &QmlBridge::settingsChanged);
+    connect(m_context->settingsManager(), &SettingsManager::soundEnabledChanged, this, [this](bool enabled) {
+        emit soundEnabledChanged(enabled);
+        emit settingsChanged();
+    });
+    connect(m_context->settingsManager(), &SettingsManager::textAnimationStyleChanged, this, &QmlBridge::settingsChanged);
 }
 
 QVariantMap QmlBridge::settings() const
@@ -51,6 +66,11 @@ QVariantMap QmlBridge::settings() const
     map[QStringLiteral("animationTheme")] = s->animationTheme();
     map[QStringLiteral("animationDuration")] = s->animationDuration();
     map[QStringLiteral("autoStart")] = s->autoStart();
+    map[QStringLiteral("showQuotes")] = s->showQuotes();
+    map[QStringLiteral("dailyGoal")] = s->dailyGoal();
+    map[QStringLiteral("reminderMessage")] = s->reminderMessage();
+    map[QStringLiteral("soundEnabled")] = s->soundEnabled();
+    map[QStringLiteral("textAnimationStyle")] = s->textAnimationStyle();
     map[QStringLiteral("availableIntervals")] = s->availableIntervals();
     return map;
 }
@@ -63,6 +83,11 @@ QString QmlBridge::currentTheme() const
 QStringList QmlBridge::availableThemes() const
 {
     return m_context->animationManager()->availableThemes();
+}
+
+QStringList QmlBridge::availableThemeNames() const
+{
+    return m_context->animationManager()->availableThemeNames();
 }
 
 int QmlBridge::todayDrinkCount() const
@@ -80,6 +105,35 @@ bool QmlBridge::isPaused() const
     return m_paused;
 }
 
+QString QmlBridge::currentQuote() const
+{
+    return m_currentQuote;
+}
+
+bool QmlBridge::showQuotes() const
+{
+    return m_context->settingsManager()->showQuotes();
+}
+
+void QmlBridge::setShowQuotes(bool enabled)
+{
+    m_context->settingsManager()->setShowQuotes(enabled);
+    m_context->settingsManager()->save();
+    qDebug() << "[QmlBridge] showQuotes set to" << enabled;
+}
+
+bool QmlBridge::soundEnabled() const
+{
+    return m_context->settingsManager()->soundEnabled();
+}
+
+void QmlBridge::setSoundEnabled(bool enabled)
+{
+    m_context->settingsManager()->setSoundEnabled(enabled);
+    m_context->settingsManager()->save();
+    qDebug() << "[QmlBridge] soundEnabled set to" << enabled;
+}
+
 void QmlBridge::saveSettings(const QVariantMap &newSettings)
 {
     auto *s = m_context->settingsManager();
@@ -94,6 +148,16 @@ void QmlBridge::saveSettings(const QVariantMap &newSettings)
         s->setAnimationDuration(newSettings.value(QStringLiteral("animationDuration")).toInt());
     if (newSettings.contains(QStringLiteral("autoStart")))
         s->setAutoStart(newSettings.value(QStringLiteral("autoStart")).toBool());
+    if (newSettings.contains(QStringLiteral("showQuotes")))
+        s->setShowQuotes(newSettings.value(QStringLiteral("showQuotes")).toBool());
+    if (newSettings.contains(QStringLiteral("dailyGoal")))
+        s->setDailyGoal(newSettings.value(QStringLiteral("dailyGoal")).toInt());
+    if (newSettings.contains(QStringLiteral("reminderMessage")))
+        s->setReminderMessage(newSettings.value(QStringLiteral("reminderMessage")).toString());
+    if (newSettings.contains(QStringLiteral("soundEnabled")))
+        s->setSoundEnabled(newSettings.value(QStringLiteral("soundEnabled")).toBool());
+    if (newSettings.contains(QStringLiteral("textAnimationStyle")))
+        s->setTextAnimationStyle(newSettings.value(QStringLiteral("textAnimationStyle")).toInt());
     s->save();
     emit settingsChanged();
     qDebug() << "[QmlBridge] Settings saved";

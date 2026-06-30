@@ -25,6 +25,11 @@ QStringList AnimationManager::availableThemes() const
     return m_availableThemes;
 }
 
+QStringList AnimationManager::availableThemeNames() const
+{
+    return m_loader->listThemeDisplayNames();
+}
+
 void AnimationManager::play()
 {
     if (m_currentTheme.isEmpty()) {

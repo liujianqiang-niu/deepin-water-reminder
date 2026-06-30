@@ -128,14 +128,4 @@ Rectangle {
             NumberAnimation { from: 0.28; to: 0.15; duration: 1500; easing.type: Easing.InOutSine }
         }
     }
-
-    Text {
-        anchors.horizontalCenter: parent.horizontalCenter; y: sh * 0.5
-        text: "风雨无阻，记得喝水"; font.pixelSize: Math.max(30, sh * 0.09); font.bold: true
-        color: "#ffffff"; style: Text.Outline; styleColor: "#222233"
-        SequentialAnimation on opacity { loops: Animation.Infinite
-            NumberAnimation { from: 0.6; to: 1.0; duration: 1000 }
-            NumberAnimation { from: 1.0; to: 0.6; duration: 1000 }
-        }
-    }
 }

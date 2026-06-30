@@ -2,6 +2,8 @@
 set(CORE_SOURCES
     core/ReminderEngine.cpp
     core/DrinkTracker.cpp
+    core/QuoteManager.cpp
+    core/SoundManager.cpp
 )
 
 set(ANIMATION_SOURCES
@@ -62,6 +64,7 @@ target_link_libraries(deepin-water-reminder PRIVATE
     Qt6::Widgets
     Qt6::Svg
     Qt6::Network
+    Qt6::Multimedia
 )
 
 # Set output name

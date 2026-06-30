@@ -100,6 +100,15 @@ QStringList AnimationLoader::listThemeIds() const
     return ids;
 }
 
+QStringList AnimationLoader::listThemeDisplayNames() const
+{
+    QStringList names;
+    for (const auto &desc : m_descriptors) {
+        names.append(desc.displayName);
+    }
+    return names;
+}
+
 bool AnimationLoader::isValid(const QString &id) const
 {
     for (const auto &desc : m_descriptors) {
